@@ -1,6 +1,6 @@
 # 🚀 Automatizador de Commit para GitHub
 
-Um script Python simples e eficiente que automatiza todo o processo de commit e push para o GitHub com apenas alguns cliques!
+Um script Python simples que automatiza commit e push para o GitHub com um único clique!
 
 ## ✨ Funcionalidades
 
@@ -8,8 +8,8 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
 - 🔄 **Inicialização automática** de repositório Git (se necessário)
 - ➕ **Adiciona todos os arquivos** automaticamente
 - 💬 **Solicita mensagem de commit** de forma interativa
-- 🌐 **Autenticação via navegador** - Login direto no GitHub sem digitar senha!
-- 🔐 **OAuth 2.0 Device Flow** - Autenticação segura e moderna
+- 🔐 **Token salvo** - Você só precisa configurar uma vez!
+- 🌐 **Abre GitHub automaticamente** para criar token (se necessário)
 - 🚀 **Push automático** para o GitHub
 - ✅ **Verificação de Git instalado** e configuração automática
 
@@ -48,7 +48,7 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
    python git_auto_commit.py
    ```
    
-   Ou dê duplo clique no arquivo `git_auto_commit.py`
+   Ou dê duplo clique no arquivo `executar.bat`
 
 ### Linux/Mac
 
@@ -64,57 +64,50 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
 
 ## 📝 Processo de Uso
 
-1. **Selecione a pasta** que deseja fazer commit
-2. **Digite a mensagem do commit** quando solicitado
-3. **Autentique no GitHub via navegador:**
-   - O navegador será aberto automaticamente
-   - Um código de verificação será exibido
-   - Digite o código no GitHub e autorize o aplicativo
-   - O app reconhecerá automaticamente após a autorização
-4. **Aguarde** enquanto o script faz todo o trabalho!
+### Primeira Vez (Configuração)
 
-### 🔄 Método Alternativo (se OAuth não funcionar)
+1. **Execute o app**
+2. **O navegador abrirá automaticamente** para criar um token
+3. **Faça login no GitHub** (se não estiver logado)
+4. **Crie um Personal Access Token:**
+   - Clique em "Generate new token (classic)"
+   - Dê um nome (ex: "Auto Commit")
+   - Selecione o escopo **`repo`**
+   - Clique em "Generate token"
+   - **COPIE o token** (você não verá novamente!)
+5. **Cole o token** quando solicitado
+6. **Pronto!** O token será salvo para uso futuro
 
-Se o método OAuth não funcionar, o app oferecerá uma alternativa:
-1. O navegador abrirá a página de criação de Personal Access Token
-2. Crie um token com escopo `repo`
-3. Cole o token quando solicitado
+### Uso Normal (Após Configuração)
+
+1. **Execute o app**
+2. **Selecione a pasta** que deseja fazer commit
+3. **Digite a mensagem do commit**
+4. **Pronto!** O app faz tudo automaticamente!
 
 ## ⚙️ O que o Script Faz
 
-1. ✅ Verifica se o Git está instalado
-2. ✅ Verifica se a pasta é um repositório Git (inicializa se necessário)
-3. ✅ Abre navegador para autenticação OAuth no GitHub
-4. ✅ Obtém token de acesso automaticamente após autorização
-5. ✅ Configura o remote do GitHub (se necessário)
-6. ✅ Adiciona todos os arquivos (`git add .`)
-7. ✅ Faz o commit com sua mensagem
-8. ✅ Faz o push para o GitHub usando o token
+1. ✅ Verifica se tem token salvo (se não tiver, abre GitHub para criar)
+2. ✅ Verifica se o Git está instalado
+3. ✅ Verifica se a pasta é um repositório Git (inicializa se necessário)
+4. ✅ Configura o remote do GitHub (se necessário)
+5. ✅ Adiciona todos os arquivos (`git add .`)
+6. ✅ Faz o commit com sua mensagem
+7. ✅ Faz o push para o GitHub usando o token salvo
 
 ## 🔒 Segurança
 
-- **Autenticação OAuth 2.0** - Método seguro e recomendado pelo GitHub
-- **Device Flow** - Não requer client_secret, ideal para aplicações desktop
-- **Token de acesso** - Usa tokens ao invés de senhas
-- **Nenhuma informação armazenada** - Credenciais não são salvas localmente
-- **Login via navegador** - Você faz login diretamente no site do GitHub
+- **Token salvo localmente** - Fica em `~/.github_auto_commit.json`
+- **Token validado** - O app verifica se o token ainda é válido antes de usar
+- **Apenas você tem acesso** - O arquivo fica na sua pasta home
+- **Personal Access Token** - Método seguro recomendado pelo GitHub
 
 ## ⚠️ Notas Importantes
 
-- **Primeira vez usando?** O script pode pedir o nome do repositório se não houver remote configurado
+- **Primeira vez?** Você precisará criar um token uma única vez
+- **Token expirado?** O app detecta e pede para criar um novo
 - **Repositório novo?** Certifique-se de que o repositório já existe no GitHub antes de fazer push
-- **Autenticação OAuth:** O app usa OAuth 2.0 Device Flow, que funciona mesmo com 2FA ativado
-- **Código de verificação:** Quando o navegador abrir, você verá um código no terminal. Digite esse código no GitHub
-- **Timeout:** Você tem até 10 minutos para autorizar no navegador
-
-### 🔧 Se OAuth não funcionar
-
-O app tem um método alternativo que:
-1. Abre a página de criação de Personal Access Token
-2. Você cria um token manualmente
-3. Cola o token no app
-
-Isso é útil se houver problemas de rede ou firewall bloqueando o OAuth.
+- **Token salvo:** O token fica salvo em `~/.github_auto_commit.json` para uso futuro
 
 ## 🐛 Solução de Problemas
 
@@ -122,16 +115,19 @@ Isso é útil se houver problemas de rede ou firewall bloqueando o OAuth.
 - Instale o Git: https://git-scm.com/downloads
 - Reinicie o terminal após instalar
 
-### Erro: "Erro ao fazer push"
-- Verifique se o token foi gerado corretamente
-- Certifique-se de que o repositório existe no GitHub
-- Verifique se o token tem permissão `repo`
-- Tente usar o método alternativo (Personal Access Token manual)
+### Erro: "ModuleNotFoundError: No module named 'requests'"
+- Instale a dependência: `pip install requests`
+- Ou execute `instalar_dependencias.bat`
 
-### Erro: "Erro ao iniciar Device Flow"
+### Erro: "Erro ao fazer push"
+- Verifique se o token tem permissão `repo`
+- Certifique-se de que o repositório existe no GitHub
 - Verifique sua conexão com a internet
-- Tente novamente (pode ser um problema temporário)
-- Use o método alternativo que será oferecido automaticamente
+
+### Erro: "Token inválido"
+- O token pode ter expirado
+- Crie um novo token no GitHub
+- O app pedirá automaticamente se detectar token inválido
 
 ### Erro: "Nenhuma alteração para commitar"
 - Isso significa que não há mudanças na pasta selecionada
@@ -148,4 +144,3 @@ Sinta-se à vontade para melhorar este script! Sugestões e pull requests são b
 ---
 
 **Desenvolvido com ❤️ para facilitar seu workflow com Git e GitHub**
-
