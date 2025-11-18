@@ -197,6 +197,53 @@ class GitAutoCommit:
             return match.group(2).replace('.git', '')
         return None
     
+    def check_repo_exists(self, username, repo_name):
+        """Verifica se o repositório existe no GitHub"""
+        try:
+            headers = {
+                'Authorization': f'token {self.github_token}',
+                'Accept': 'application/vnd.github.v3+json'
+            }
+            response = requests.get(
+                f'https://api.github.com/repos/{username}/{repo_name}',
+                headers=headers,
+                timeout=10
+            )
+            return response.status_code == 200
+        except:
+            return False
+    
+    def create_repo_on_github(self, repo_name, is_private=False):
+        """Cria o repositório no GitHub automaticamente"""
+        try:
+            headers = {
+                'Authorization': f'token {self.github_token}',
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            }
+            data = {
+                'name': repo_name,
+                'private': is_private,
+                'auto_init': False  # Não inicializa com README pois já temos arquivos
+            }
+            response = requests.post(
+                'https://api.github.com/user/repos',
+                headers=headers,
+                json=data,
+                timeout=10
+            )
+            if response.status_code == 201:
+                return True
+            elif response.status_code == 422:
+                # Repositório já existe ou nome inválido
+                error_data = response.json()
+                if 'already exists' in str(error_data).lower():
+                    return True  # Já existe, então está ok
+            return False
+        except Exception as e:
+            print(f"Erro ao criar repositório: {e}")
+            return False
+    
     def get_repo_name(self):
         """Solicita o nome do repositório se necessário"""
         self.root.deiconify()
@@ -438,12 +485,38 @@ class GitAutoCommit:
             return False
         print("   Commit realizado com sucesso!")
         
+        # Verifica se repositório existe no GitHub
+        print(f"\n6. Verificando repositório no GitHub...")
+        if not self.check_repo_exists(self.github_username, repo_name):
+            print(f"   Repositório '{repo_name}' não encontrado no GitHub.")
+            resposta = messagebox.askyesno(
+                "Criar Repositório",
+                f"O repositório '{repo_name}' não existe no GitHub.\n\n"
+                f"Deseja criar automaticamente?"
+            )
+            if resposta:
+                print(f"   Criando repositório '{repo_name}' no GitHub...")
+                if self.create_repo_on_github(repo_name, is_private=False):
+                    print(f"   ✅ Repositório criado com sucesso!")
+                else:
+                    messagebox.showerror(
+                        "Erro",
+                        f"Não foi possível criar o repositório '{repo_name}'.\n"
+                        f"Verifique se o nome é válido e tente novamente."
+                    )
+                    return False
+            else:
+                print("Operação cancelada.")
+                return False
+        else:
+            print(f"   ✅ Repositório encontrado no GitHub!")
+        
         # Verifica branch
         branch = self.get_current_branch(self.selected_folder)
-        print(f"\n6. Branch atual: {branch}")
+        print(f"\n7. Branch atual: {branch}")
         
         # Faz push
-        print("\n7. Fazendo push para o GitHub...")
+        print("\n8. Fazendo push para o GitHub...")
         if not self.git_push(self.selected_folder,
                            self.github_username,
                            self.github_token,
