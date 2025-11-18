@@ -8,7 +8,8 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
 - 🔄 **Inicialização automática** de repositório Git (se necessário)
 - ➕ **Adiciona todos os arquivos** automaticamente
 - 💬 **Solicita mensagem de commit** de forma interativa
-- 🔐 **Entrada segura de senha** (senha não é exibida)
+- 🌐 **Autenticação via navegador** - Login direto no GitHub sem digitar senha!
+- 🔐 **OAuth 2.0 Device Flow** - Autenticação segura e moderna
 - 🚀 **Push automático** para o GitHub
 - ✅ **Verificação de Git instalado** e configuração automática
 
@@ -28,8 +29,15 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
 
 1. **Clone ou baixe este repositório**
 
-2. **Não são necessárias dependências externas!**
-   - O script usa apenas bibliotecas padrão do Python
+2. **Instale as dependências:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
+   Ou instale manualmente:
+   ```bash
+   pip install requests
+   ```
 
 ## 🎯 Como Usar
 
@@ -58,40 +66,55 @@ Um script Python simples e eficiente que automatiza todo o processo de commit e 
 
 1. **Selecione a pasta** que deseja fazer commit
 2. **Digite a mensagem do commit** quando solicitado
-3. **Informe seu usuário do GitHub**
-4. **Digite sua senha** (não será exibida na tela)
-5. **Aguarde** enquanto o script faz todo o trabalho!
+3. **Autentique no GitHub via navegador:**
+   - O navegador será aberto automaticamente
+   - Um código de verificação será exibido
+   - Digite o código no GitHub e autorize o aplicativo
+   - O app reconhecerá automaticamente após a autorização
+4. **Aguarde** enquanto o script faz todo o trabalho!
+
+### 🔄 Método Alternativo (se OAuth não funcionar)
+
+Se o método OAuth não funcionar, o app oferecerá uma alternativa:
+1. O navegador abrirá a página de criação de Personal Access Token
+2. Crie um token com escopo `repo`
+3. Cole o token quando solicitado
 
 ## ⚙️ O que o Script Faz
 
 1. ✅ Verifica se o Git está instalado
 2. ✅ Verifica se a pasta é um repositório Git (inicializa se necessário)
-3. ✅ Configura o remote do GitHub (se necessário)
-4. ✅ Adiciona todos os arquivos (`git add .`)
-5. ✅ Faz o commit com sua mensagem
-6. ✅ Faz o push para o GitHub
+3. ✅ Abre navegador para autenticação OAuth no GitHub
+4. ✅ Obtém token de acesso automaticamente após autorização
+5. ✅ Configura o remote do GitHub (se necessário)
+6. ✅ Adiciona todos os arquivos (`git add .`)
+7. ✅ Faz o commit com sua mensagem
+8. ✅ Faz o push para o GitHub usando o token
 
 ## 🔒 Segurança
 
-- A senha é solicitada usando `getpass`, que não exibe os caracteres digitados
-- As credenciais são usadas apenas para autenticação no GitHub
-- Nenhuma informação é armazenada localmente
+- **Autenticação OAuth 2.0** - Método seguro e recomendado pelo GitHub
+- **Device Flow** - Não requer client_secret, ideal para aplicações desktop
+- **Token de acesso** - Usa tokens ao invés de senhas
+- **Nenhuma informação armazenada** - Credenciais não são salvas localmente
+- **Login via navegador** - Você faz login diretamente no site do GitHub
 
 ## ⚠️ Notas Importantes
 
 - **Primeira vez usando?** O script pode pedir o nome do repositório se não houver remote configurado
 - **Repositório novo?** Certifique-se de que o repositório já existe no GitHub antes de fazer push
-- **Autenticação:** Se você usa autenticação de dois fatores (2FA), pode precisar usar um Personal Access Token ao invés da senha
+- **Autenticação OAuth:** O app usa OAuth 2.0 Device Flow, que funciona mesmo com 2FA ativado
+- **Código de verificação:** Quando o navegador abrir, você verá um código no terminal. Digite esse código no GitHub
+- **Timeout:** Você tem até 10 minutos para autorizar no navegador
 
-### Usando Personal Access Token (Recomendado)
+### 🔧 Se OAuth não funcionar
 
-Se você usa 2FA ou prefere maior segurança:
+O app tem um método alternativo que:
+1. Abre a página de criação de Personal Access Token
+2. Você cria um token manualmente
+3. Cola o token no app
 
-1. Crie um Personal Access Token no GitHub:
-   - Settings → Developer settings → Personal access tokens → Tokens (classic)
-   - Gere um novo token com permissões `repo`
-
-2. Use o token como senha quando o script solicitar
+Isso é útil se houver problemas de rede ou firewall bloqueando o OAuth.
 
 ## 🐛 Solução de Problemas
 
@@ -100,9 +123,15 @@ Se você usa 2FA ou prefere maior segurança:
 - Reinicie o terminal após instalar
 
 ### Erro: "Erro ao fazer push"
-- Verifique suas credenciais
+- Verifique se o token foi gerado corretamente
 - Certifique-se de que o repositório existe no GitHub
-- Se usar 2FA, use um Personal Access Token
+- Verifique se o token tem permissão `repo`
+- Tente usar o método alternativo (Personal Access Token manual)
+
+### Erro: "Erro ao iniciar Device Flow"
+- Verifique sua conexão com a internet
+- Tente novamente (pode ser um problema temporário)
+- Use o método alternativo que será oferecido automaticamente
 
 ### Erro: "Nenhuma alteração para commitar"
 - Isso significa que não há mudanças na pasta selecionada

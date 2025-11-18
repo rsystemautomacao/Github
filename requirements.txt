@@ -1,4 +1,6 @@
-# Este projeto usa apenas bibliotecas padrão do Python
-# Não são necessárias dependências externas
+# Dependências do projeto
+requests>=2.25.0
+
 # Python 3.6+ é necessário
+# Bibliotecas padrão usadas: tkinter, subprocess, http.server, webbrowser, etc.
 
