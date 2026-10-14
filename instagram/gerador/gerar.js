@@ -16,8 +16,8 @@ const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 const { series, posts } = require('./conteudo');
 
-// Opcional: seu @ aparece no rodapé das imagens e dos vídeos.
-const PERFIL = process.env.PERFIL || '';
+// Seu @ no rodapé das imagens e dos vídeos (PERFIL="" remove).
+const PERFIL = process.env.PERFIL ?? '@insta.rsystem';
 
 const FPS = 30;
 const SAIDA = path.join(__dirname, '..', 'posts');
@@ -185,6 +185,7 @@ body{font-family:Inter,'Noto Color Emoji',sans-serif;color:var(--fg);position:re
 .lbl{font-size:28px;font-weight:800;color:var(--mut)}
 .rodape{position:absolute;left:84px;right:84px;bottom:${reel ? 330 : 56}px;display:flex;justify-content:space-between;align-items:center;font-size:28px;font-weight:700;color:var(--mut)}
 .rodape .pag{color:var(--acc)}
+.perfil{position:absolute;right:84px;top:182px;font-size:30px;font-weight:800;color:var(--acc)}
 .serie{position:absolute;left:84px;top:${reel ? 190 : 56}px;font-size:24px;letter-spacing:.18em;font-weight:800;color:var(--mut);opacity:.85}
 .cena.capa .title{font-size:${reel ? 100 : 96}px}
 .cena.capa .emoji{font-size:${reel ? 230 : 200}px}
@@ -220,6 +221,9 @@ async function gerarCarrossel(page, post, dir) {
 
 // ───────────────────────────── reel ─────────────────────────────
 
+// No Reel o @ fica no topo: o rodapé é coberto pela legenda e pelos botões do app.
+const topoReel = (s) => `<div class="serie">${esc(s.nome)}</div>` + (PERFIL ? `<div class="perfil">${esc(PERFIL)}</div>` : '');
+
 function montarReel(post) {
   const s = series[post.serie];
   const TRANS = 0.4;
@@ -245,16 +249,14 @@ function montarReel(post) {
     })
     .join('\n');
   const barra = `<div class="barra" style="animation:progresso ${total.toFixed(2)}s linear 0s both"></div>`;
-  const topo = `<div class="serie">${esc(s.nome)}</div>`;
-  const rodape = PERFIL ? `<div class="rodape"><span>${esc(PERFIL)}</span><span></span></div>` : '';
-  return { html: paginaHTML({ fmt: 'reel', cor: s.cor, corpo: barra + topo + corpo, rodape }), total };
+  return { html: paginaHTML({ fmt: 'reel', cor: s.cor, corpo: barra + topoReel(s) + corpo }), total };
 }
 
 async function gerarReel(page, post, dir, comVideo) {
   const s = series[post.serie];
   // Capa (primeira cena estática): use como "capa do Reel" ao publicar.
   const { html: capa } = cenaHTML(post.cenas[0], 'reel', null);
-  await page.setContent(paginaHTML({ fmt: 'reel', cor: s.cor, corpo: `<div class="serie">${esc(s.nome)}</div><div class="cena capa">${capa}</div>` }));
+  await page.setContent(paginaHTML({ fmt: 'reel', cor: s.cor, corpo: `${topoReel(s)}<div class="cena capa">${capa}</div>` }));
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: path.join(dir, 'capa.png') });
   if (!comVideo) return;

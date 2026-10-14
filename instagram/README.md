@@ -15,6 +15,31 @@ instagram/
 
 ---
 
+## 📥 Onde pegar o material
+
+**No computador (recomendado):**
+1. Baixe o ZIP com tudo: <https://github.com/rsystemautomacao/Github/archive/refs/heads/claude/kind-hypatia-fxvr5g.zip>. Precisa estar logado no GitHub se o repositório for privado.
+   Outro caminho: abra <https://github.com/rsystemautomacao/Github>, troque o branch de `main` para `claude/kind-hypatia-fxvr5g`, clique em **Code → Download ZIP**.
+2. Extraia o ZIP e abra `instagram/posts/`. Cada pasta é um post, já na ordem do calendário (`01-…`, `02-…`).
+3. Dentro de cada pasta:
+   - `reel.mp4` + `capa.png` → Reels
+   - `slide-01.png … slide-07.png` → carrossel (suba nessa ordem)
+   - `legenda.txt` → abra no Bloco de Notas e copie a legenda, as hashtags e o texto alternativo
+
+**Para postar pelo celular:** envie a pasta do post para o **Google Drive** (ou OneDrive) e, no celular, toque em *⋮ → Fazer download*. Os arquivos vão para a galeria. Evite mandar pelo WhatsApp como foto ou vídeo, porque ele reduz a qualidade. Se for usar o WhatsApp, envie como **Documento**.
+
+## ⏰ Agendar tudo de uma vez (Meta Business Suite, grátis)
+
+Em uns 30 minutos dá para deixar os 11 posts agendados pelo computador, sem passar nada para o celular:
+1. Garanta que **@insta.rsystem** é conta **Profissional** (Criador ou Empresa): *Configurações → Tipo de conta e ferramentas*.
+2. Acesse <https://business.facebook.com> e entre com o Facebook ligado ao Instagram. Se pedir, conecte o Instagram em *Configurações → Contas do Instagram*.
+3. Vá em **Planejador → Criar publicação** (para carrossel) ou **Criar reel** (para Reels).
+4. Marque só o Instagram, suba os arquivos da pasta do post e cole a legenda do `legenda.txt`.
+5. Em **Opções de agendamento**, escolha a data e a hora do calendário abaixo e clique em **Agendar**.
+6. Repita para os 11 posts.
+
+**Faça no celular, na hora em que o post for ao ar:** colocar o **áudio em alta** nos Reels. A biblioteca de músicas do Business Suite é menor que a do app. Se quiser o áudio em alta, publique os Reels pelo app, ou edite o Reel logo depois que ele for publicado.
+
 ## 🗓️ Calendário
 
 | # | Data sugerida | Formato | Tema | Analogia do dia a dia |
@@ -109,9 +134,9 @@ node gerar.js 03 07           # só os posts 03 e 07
 node gerar.js --sem-video     # só carrosséis, capas e legendas (rápido)
 ```
 
-Para colocar seu @ no rodapé das artes:
-- PowerShell: `$env:PERFIL="@seuperfil"; node gerar.js`
-- Linux/Mac: `PERFIL=@seuperfil node gerar.js`
+O **@insta.rsystem** já sai nas artes: no rodapé dos carrosséis e no topo dos Reels, porque embaixo o app cobre com a legenda e os botões. Para trocar ou remover:
+- PowerShell: `$env:PERFIL="@outroperfil"; node gerar.js` (ou `$env:PERFIL=""` para tirar)
+- Linux/Mac: `PERFIL=@outroperfil node gerar.js`
 
 **Para criar um post novo**, copie um bloco em `conteudo.js`, troque o `id` e os textos e rode o gerador. Use `**palavra**` para destacar na cor da série. Cada cena aceita `emoji`, `title`, `text`, `code`, `rows` (tabela), `bullets` e `chart` (gráfico de barras animado). A duração de cada cena no Reel é calculada pelo tamanho do texto.
 
