@@ -1,0 +1,28 @@
+POST 08-loops-lavar-louca
+Formato: Carrossel (7 imagens 1080x1350)
+Publicar: Ter 10/11/2026 · 12h
+
+──────── LEGENDA (copie daqui) ────────
+
+Você executa um loop toda vez que lava a louça 🧽 (arrasta →)
+
+ENQUANTO tiver prato na pia:
+→ pega um prato
+→ lava
+→ põe no escorredor
+…e repete.
+
+Em lógica de programação isso é uma estrutura de repetição:
+🔁 while: repete enquanto a condição for verdadeira
+🔁 for: repete para cada item de uma lista (cada copo do jogo)
+🚨 E todo loop precisa de uma condição de parada, senão vira loop infinito (o prato que nunca sai da pia 😅)
+
+💬 Que tarefa da sua rotina é um loop? A resposta mais criativa vira post!
+📌 Salva pra revisar quando for estudar laços de repetição.
+
+#logicadeprogramacao #programacao #python #aprenderprogramar #tecnologia
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Carrossel explicando estruturas de repetição while e for com a analogia de lavar louça enquanto houver pratos na pia, com exemplos de código em Python.

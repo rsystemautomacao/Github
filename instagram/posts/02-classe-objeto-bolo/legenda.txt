@@ -1,0 +1,26 @@
+POST 02-classe-objeto-bolo
+Formato: Carrossel (7 imagens 1080x1350)
+Publicar: Qui 22/10/2026 · 12h
+
+──────── LEGENDA (copie daqui) ────────
+
+Classe e objeto explicados com bolo 🎂 (arrasta →)
+
+Esse é O conceito da Programação Orientada a Objetos (POO) que mais confunde quem está começando. Então vamos pra cozinha:
+
+📜 Classe = a forma + a receita. Define como todo bolo vai ser.
+🍰 Objeto = o bolo pronto. Uma forma, vários bolos.
+🍫 Atributos = o que o bolo TEM (sabor, cobertura)
+🍴 Métodos = o que o bolo FAZ (fatiar, decorar)
+
+No slide 4 tem o código em Python, pra você ver a analogia virando programa de verdade.
+
+💬 Comenta qual bolo (objeto) você criaria com essa classe. Os melhores sabores ganham resposta 😄
+📌 Salva pra revisar antes da prova ou da entrevista.
+
+#poo #programacaoorientadaaobjetos #programacao #python #devbrasil
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Carrossel de 7 slides explicando classe e objeto em Programação Orientada a Objetos: a classe é a forma de bolo e o objeto é o bolo pronto, com exemplo de código em Python.

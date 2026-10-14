@@ -1,0 +1,27 @@
+POST 09-funcao-liquidificador
+Formato: Reels (1080x1920)
+Publicar: Qui 12/11/2026 · 19h
+
+──────── LEGENDA (copie daqui) ────────
+
+Função em programação é um liquidificador. Sério 🥤
+
+🍓 Entram os ingredientes → parâmetros (a entrada)
+🌀 Ele processa → você não precisa saber como o motor funciona
+🥤 Sai a vitamina → o retorno (a saída)
+
+Em Python:
+def liquidificador(fruta, liquido):
+    return f"vitamina de {fruta} com {liquido}"
+
+Por que isso importa? Porque com funções você escreve uma vez e usa mil vezes, deixa o código organizado e acha erros muito mais rápido.
+
+💬 Que vitamina a sua função faria? Comenta os parâmetros 🍌
+➕ Segue pra aprender lógica de programação sem decoreba.
+
+#logicadeprogramacao #python #programacaoparainiciantes #programacao #estudandoprogramacao
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado explicando funções em programação com a analogia de um liquidificador: ingredientes são parâmetros, o processamento é o corpo da função e a vitamina é o retorno.

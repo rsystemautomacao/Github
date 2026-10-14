@@ -1,0 +1,27 @@
+POST 07-etl-feira
+Formato: Carrossel (7 imagens 1080x1350)
+Publicar: Qui 05/11/2026 · 12h
+
+──────── LEGENDA (copie daqui) ────────
+
+ETL explicado com uma ida à feira 🥕 (arrasta →)
+
+Todo dashboard bonito tem uma cozinha bagunçada por trás. Ela se chama ETL:
+
+🧺 E de Extrair: buscar os ingredientes em vários lugares (planilhas, sistemas, APIs, bancos de dados)
+🔪 T de Transformar: lavar, descascar e tirar o que estragou (remover duplicados, padronizar datas e nomes)
+🍽️ L de Load, Carregar: deixar tudo pronto no data warehouse, pro Power BI só servir à mesa
+
+Dashboard com dado sujo é igual comida mal lavada: parece bonito, mas faz mal 🤢
+
+Se você quer trabalhar com BI, análise ou engenharia de dados, esse conceito é a base de tudo.
+
+💬 Comenta ETL se você já encontrou um dado "estragado" (conta qual!)
+📌 Salva pra consultar no próximo projeto.
+
+#etl #engenhariadedados #powerbi #businessintelligence #dados
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Carrossel explicando o processo de ETL (extrair, transformar e carregar dados) usando a analogia de comprar ingredientes na feira, lavar e cortar, e servir no prato.

@@ -1,0 +1,26 @@
+POST 10-desafio-pense-como-computador
+Formato: Carrossel (7 imagens 1080x1350)
+Publicar: Ter 17/11/2026 · 12h
+
+──────── LEGENDA (copie daqui) ────────
+
+Você consegue pensar como um computador? 🤖🧠
+
+3 desafios de lógica de programação, do fácil ao difícil:
+🟢 Desafio 1: variáveis
+🟡 Desafio 2: if / else
+🔴 Desafio 3: for + resto da divisão
+
+⚠️ Regra: responde nos comentários ANTES de olhar o gabarito (não vale espiar 👀)
+
+Esse tipo de exercício é chamado de teste de mesa: você executa o código "na cabeça", linha por linha, como o computador faria. É um dos melhores treinos pra quem está aprendendo a programar.
+
+🏆 Comenta seu placar (0, 1, 2 ou 3)
+🏷️ Marca um amigo pra ver quem acerta mais
+
+#logicadeprogramacao #programacao #python #desafio #aprenderprogramar
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Carrossel interativo com 3 desafios de lógica de programação em Python, um sobre variáveis, um sobre if e else e um sobre laço for, com gabarito no penúltimo slide.

@@ -1,0 +1,26 @@
+POST 06-pilares-poo-cafeteira
+Formato: Reels (1080x1920)
+Publicar: Ter 03/11/2026 · 19h
+
+──────── LEGENDA (copie daqui) ────────
+
+Os 4 pilares da POO explicados com uma cafeteira ☕
+
+Essa é uma das perguntas mais comuns em entrevista de estágio e júnior. Guarda essa:
+
+🔒 Encapsulamento: as peças internas ficam trancadas. Você não mexe na resistência, só usa o que a máquina libera.
+🎛️ Abstração: você só vê os botões que importam (curto, longo, cappuccino).
+🧬 Herança: a cafeteira de cápsula herda tudo da comum e ainda ganha funções novas.
+🎭 Polimorfismo: o mesmo comando preparar() gera café, chá ou chocolate.
+
+Programação Orientada a Objetos não precisa ser decoreba. Quando você entende a analogia, o código faz sentido sozinho.
+
+📌 Salva antes da próxima entrevista
+👇 Manda pro amigo que está estudando POO
+
+#poo #programacaoorientadaaobjetos #programacao #python #carreiraemti
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado explicando os 4 pilares da programação orientada a objetos (encapsulamento, abstração, herança e polimorfismo) usando uma cafeteira como exemplo.

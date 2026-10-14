@@ -1,0 +1,28 @@
+POST 01-variavel-pote-de-tempero
+Formato: Reels (1080x1920)
+Publicar: Ter 20/10/2026 · 19h
+
+──────── LEGENDA (copie daqui) ────────
+
+Você já usa variáveis todo dia e nem percebeu 🧂
+
+Na cozinha, cada pote tem uma etiqueta ("açúcar", "sal") e um conteúdo que muda: acaba, você reabastece, e o pote continua o mesmo.
+
+Em lógica de programação, uma variável funciona exatamente assim:
+🏷️ o nome é a etiqueta
+🍚 o valor é o que está dentro
+🔄 trocar o valor = reabastecer o pote
+
+Por isso o nome: o conteúdo VARIA, então é uma VARIável 😉
+
+Se você está começando a aprender programação (Python, JavaScript, qualquer linguagem), esse é o primeiro conceito que precisa ficar claro, e agora ficou.
+
+💬 Comenta: qual "pote" da sua cozinha seria a variável mais importante do seu código?
+📌 Salva pra revisar e manda pra quem está começando.
+
+#logicadeprogramacao #programacao #programacaoparainiciantes #python #aprenderprogramar
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado explicando variáveis em programação com a analogia de potes de tempero com etiqueta: o nome da variável é a etiqueta e o valor é o conteúdo do pote.

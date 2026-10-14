@@ -1,0 +1,26 @@
+POST 05-halloween-monstros-do-codigo
+Formato: Carrossel (7 imagens 1080x1350)
+Publicar: Sáb 31/10/2026 · 11h (Halloween)
+
+──────── LEGENDA (copie daqui) ────────
+
+5 monstros que assombram todo programador 🎃👻 (arrasta →)
+
+🧟 1. Loop infinito: o zumbi que nunca para
+👻 2. Null: o fantasma que você chama e não está lá
+🧛 3. O bug de sexta à noite: só aparece depois do deploy
+🕷️ 4. Código espaguete: mexe num fio, cai do outro lado
+🧙 5. "Na minha máquina funciona": a maldição mais antiga da TI
+
+E cada um tem seu antídoto (tá nos slides 😉). Quem está aprendendo programação vai encontrar TODOS em algum momento. Conhecer o monstro é metade da batalha.
+
+💬 Responde com o NÚMERO do monstro que já te assombrou
+🏷️ Marca aquele amigo que é o nº 5 😂
+Feliz Halloween, dev! 🎃
+
+#halloween #programacao #programador #devbrasil #tecnologia
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Carrossel de Halloween com 5 problemas comuns de programação apresentados como monstros: loop infinito como zumbi, null como fantasma, bug de sexta como vampiro, código espaguete como aranha e o "na minha máquina funciona" como bruxo.

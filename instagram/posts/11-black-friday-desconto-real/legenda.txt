@@ -1,0 +1,27 @@
+POST 11-black-friday-desconto-real
+Formato: Reels (1080x1920)
+Publicar: Ter 24/11/2026 · 19h (semana da Black Friday, 27/11)
+
+──────── LEGENDA (copie daqui) ────────
+
+"De R$ 1.999 por R$ 999"… é desconto mesmo? 🤔🏷️
+
+Na Black Friday todo mundo olha só o preço de hoje. Quem trabalha com BI olha o histórico.
+
+📈 Série temporal: como o preço se comportou nos últimos meses
+🧮 A métrica certa: compare com a MÉDIA dos últimos meses, não com o preço "de"
+😬 No exemplo do vídeo, o "50% off" vira só 17% de desconto real
+
+Isso é Business Intelligence na vida real: decidir com dados, não com emoção (nem com contagem regressiva piscando na tela 😅).
+
+Dica: sites e extensões de histórico de preços fazem exatamente essa análise pra você.
+
+😂 Manda pro amigo que sempre cai no "metade do dobro"
+📌 Salva pra usar na sexta, 27/11
+
+#blackfriday #blackfriday2026 #analisededados #businessintelligence #dados
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado mostrando como analisar se um desconto de Black Friday é real usando histórico de preços: um gráfico de barras mostra o preço subindo em novembro antes da promoção, e o cálculo revela 17% de desconto real em vez de 50%.

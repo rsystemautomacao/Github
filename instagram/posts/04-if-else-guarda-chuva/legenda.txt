@@ -1,0 +1,25 @@
+POST 04-if-else-guarda-chuva
+Formato: Reels (1080x1920)
+Publicar: Ter 27/10/2026 · 19h
+
+──────── LEGENDA (copie daqui) ────────
+
+Você toma decisões como um programa. Toda manhã ☔
+
+Antes de sair de casa você roda isso no cérebro:
+SE estiver chovendo → leva guarda-chuva
+SENÃO → óculos escuros 😎
+
+Em lógica de programação isso se chama estrutura condicional (if / else). E quando tem mais de uma possibilidade, entra o elif ("senão, se…").
+
+💡 Regra de ouro: o computador testa as condições de cima pra baixo e para na PRIMEIRA que for verdadeira. A ordem importa!
+
+👇 Desafio: escreve nos comentários um if da sua rotina. Vale tudo: café, academia, segunda-feira…
+📌 Salva e manda pra quem está aprendendo a programar.
+
+#logicadeprogramacao #programacao #python #programacaoparainiciantes #estudandoprogramacao
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado explicando if, elif e else com a decisão de levar guarda-chuva quando está chovendo, com exemplos de código em Python.

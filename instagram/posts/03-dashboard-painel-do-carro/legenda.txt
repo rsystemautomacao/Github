@@ -1,0 +1,27 @@
+POST 03-dashboard-painel-do-carro
+Formato: Reels (1080x1920)
+Publicar: Sáb 24/10/2026 · 11h
+
+──────── LEGENDA (copie daqui) ────────
+
+Você já sabe ler um dashboard. Só não sabia 👀🚗
+
+O painel do carro é o dashboard mais famoso do mundo:
+⛽ combustível, 🏁 velocidade, 🌡️ temperatura, tudo num olhar.
+
+Em Business Intelligence (BI) é a mesma ideia:
+📍 cada ponteiro é um KPI (indicador-chave)
+🚨 a luz de alerta é um alerta condicional: acende quando algo sai do normal
+📊 um bom dashboard mostra pouco, se entende em 5 segundos e avisa ANTES do problema
+
+Se o seu dashboard no Power BI precisa de 10 minutos de explicação, ele é um painel de avião, não de carro 😅
+
+💬 Comenta PAINEL se quer o próximo: ETL explicado com uma ida à feira 🥕
+➕ Segue pra aprender BI e análise de dados sem complicação.
+
+#businessintelligence #powerbi #dashboard #analisededados #dados
+
+──────── TEXTO ALTERNATIVO ────────
+(Configurações avançadas → Acessibilidade → Escrever texto alternativo)
+
+Vídeo animado comparando um dashboard de BI ao painel de um carro: cada ponteiro é um KPI e a luz de alerta é um alerta condicional.
