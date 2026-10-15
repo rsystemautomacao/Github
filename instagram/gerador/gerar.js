@@ -5,19 +5,30 @@
 //   node gerar.js              -> gera tudo
 //   node gerar.js 03 07        -> gera só os posts cujo id começa com 03 ou 07
 //   node gerar.js --sem-video  -> pula a renderização dos vídeos (só capa + legenda)
+//   node gerar.js --sem-voz    -> Reels sem narração
 //
 // Requisitos: Node 18+, `npm install` nesta pasta, Chromium do Playwright
-// (`npx playwright install chromium`) e ffmpeg no PATH.
+// (`npx playwright install chromium`) e ffmpeg no PATH. Para a narração:
+// Python 3 com `pip install -r requirements.txt` e os arquivos do Kokoro em gerador/modelos/
+// (links no README).
 
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 const { series, posts } = require('./conteudo');
 
 // Seu @ no rodapé das imagens e dos vídeos (PERFIL="" remove).
 const PERFIL = process.env.PERFIL ?? '@insta.rsystem';
+
+// Narração: vozes pt-BR do Kokoro: pm_alex, pm_santa (masculinas) e pf_dora (feminina).
+const VOZ = process.env.VOZ || 'pm_alex';
+const VELOCIDADE = Number(process.env.VELOCIDADE || 1.08);
+const PYTHON = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
+const MODELOS = path.join(__dirname, 'modelos');
+const CACHE_VOZ = path.join(__dirname, '.cache', 'voz');
 
 const FPS = 30;
 const SAIDA = path.join(__dirname, '..', 'posts');
@@ -52,11 +63,13 @@ function highlight(linha) {
 // Com `t0 === null` nada é animado (usado nos carrosséis e nas capas).
 // `gancho` (1ª cena): selo e frase já estão na tela no frame 0, que vira a miniatura no feed;
 // só o emoji entra animado.
-function cenaHTML(c, fmt, t0, gancho = false) {
+// `escala` espalha a entrada dos elementos ao longo da narração da cena.
+function cenaHTML(c, fmt, t0, gancho = false, escala = 1) {
+  const em = (dt = 0) => (t0 + t * escala + dt).toFixed(2);
   const animar = t0 !== null;
   const ritmo = gancho ? 0.3 : 1;
   let t = gancho ? 0 : 0.1;
-  const anim = (nome, dur, extra = '') => (animar ? `style="animation:${nome} ${dur}s cubic-bezier(.2,.8,.2,1) ${(t0 + t).toFixed(2)}s both${extra}"` : '');
+  const anim = (nome, dur, extra = '') => (animar ? `style="animation:${nome} ${dur}s cubic-bezier(.2,.8,.2,1) ${em()}s both${extra}"` : '');
   const animFixo = gancho ? () => '' : anim;
   const partes = [];
   const contentW = FORMATOS[fmt].w - 168;
@@ -66,7 +79,7 @@ function cenaHTML(c, fmt, t0, gancho = false) {
     t += 0.15 * ritmo;
   }
   if (c.emoji) {
-    const flutua = animar ? `, float 3.2s ease-in-out ${(t0 + t + 0.7).toFixed(2)}s infinite` : '';
+    const flutua = animar ? `, float 3.2s ease-in-out ${em(0.7)}s infinite` : '';
     partes.push(`<div class="emoji" ${anim('pop', 0.7, flutua)}>${c.emoji}</div>`);
     t += 0.3 * ritmo;
   }
@@ -125,8 +138,8 @@ function cenaHTML(c, fmt, t0, gancho = false) {
     const barras = values
       .map((v, i) => {
         const h = Math.round((v / max) * 100);
-        const st = animar ? `animation:grow .7s cubic-bezier(.2,.8,.2,1) ${(t0 + t).toFixed(2)}s both;` : '';
-        const lb = animar ? `style="animation:up .4s ease ${(t0 + t + 0.45).toFixed(2)}s both"` : '';
+        const st = animar ? `animation:grow .7s cubic-bezier(.2,.8,.2,1) ${em()}s both;` : '';
+        const lb = animar ? `style="animation:up .4s ease ${em(0.45)}s both"` : '';
         t += 0.3;
         return `<div class="bar ${hl.includes(i) ? 'hl' : ''}"><span class="val" ${lb}>${esc(prefix + v.toLocaleString('pt-BR'))}</span><div class="fill" style="height:${h}%;${st}"></div><span class="lbl">${esc(labels[i])}</span></div>`;
       })
@@ -224,15 +237,41 @@ async function gerarCarrossel(page, post, dir) {
 // No Reel o @ fica no topo: o rodapé é coberto pela legenda e pelos botões do app.
 const topoReel = (s) => `<div class="serie">${esc(s.nome)}</div>` + (PERFIL ? `<div class="perfil">${esc(PERFIL)}</div>` : '');
 
-function montarReel(post) {
+// Gera (ou reaproveita do cache) o áudio de cada fala. Retorna [{ wav, dur }] na ordem das cenas.
+function narrar(post) {
+  const falas = post.narracao.map((texto) => ({
+    chave: crypto.createHash('sha1').update(`${VOZ}|${VELOCIDADE}|${texto}`).digest('hex').slice(0, 16),
+    texto,
+  }));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'voz-'));
+  const pedido = path.join(tmp, 'pedido.json');
+  const resposta = path.join(tmp, 'resposta.json');
+  fs.writeFileSync(pedido, JSON.stringify({ voz: VOZ, velocidade: VELOCIDADE, modelos: MODELOS, cache: CACHE_VOZ, falas }));
+  execFileSync(PYTHON, [path.join(__dirname, 'narrar.py'), pedido, resposta], { stdio: 'inherit' });
+  const dur = JSON.parse(fs.readFileSync(resposta, 'utf8'));
+  fs.rmSync(tmp, { recursive: true, force: true });
+  return falas.map((f) => ({ wav: path.join(CACHE_VOZ, `${f.chave}.wav`), dur: dur[f.chave] }));
+}
+
+// Com narração, a cena dura o tempo da fala; sem ela, o tempo de leitura do texto.
+function montarReel(post, audios = null) {
   const s = series[post.serie];
   const TRANS = 0.4;
+  const RESPIRO = 0.25; // a fala começa logo depois que a cena entra
   let inicio = 0;
+  const falas = [];
   const cenas = post.cenas.map((c, i) => {
     const ultima = i === post.cenas.length - 1;
-    const { html, fim } = cenaHTML(c, 'reel', inicio, i === 0);
-    // tempo de leitura depois que o último elemento aparece
-    const dur = c.dur || Math.max(2.8, +(fim + 1.2 + (ultima ? 1.2 : 0)).toFixed(2));
+    const gancho = i === 0;
+    const { fim } = cenaHTML(c, 'reel', inicio, gancho);
+    const fala = audios && audios[i];
+    // os elementos vão aparecendo enquanto o narrador fala (até ~75% da fala)
+    const escala = fala ? Math.max(1, (fala.dur * 0.75) / fim) : 1;
+    const { html } = cenaHTML(c, 'reel', inicio, gancho, escala);
+    const leitura = fim * escala + 1.2 + (ultima ? 1.2 : 0);
+    const narrada = fala ? (gancho ? 0.1 : RESPIRO) + fala.dur + 0.45 + (ultima ? 1.0 : 0) : 0;
+    const dur = +Math.max(c.dur || 0, 2.8, fala ? narrada : leitura).toFixed(2);
+    if (fala) falas.push({ wav: fala.wav, ini: inicio + (gancho ? 0.1 : RESPIRO) });
     const bloco = { html, ini: inicio, fim: inicio + dur };
     // a próxima cena entra enquanto esta sai (sem quadro vazio entre elas)
     inicio += ultima ? dur : dur - TRANS;
@@ -249,10 +288,10 @@ function montarReel(post) {
     })
     .join('\n');
   const barra = `<div class="barra" style="animation:progresso ${total.toFixed(2)}s linear 0s both"></div>`;
-  return { html: paginaHTML({ fmt: 'reel', cor: s.cor, corpo: barra + topoReel(s) + corpo }), total };
+  return { html: paginaHTML({ fmt: 'reel', cor: s.cor, corpo: barra + topoReel(s) + corpo }), total, falas };
 }
 
-async function gerarReel(page, post, dir, comVideo) {
+async function gerarReel(page, post, dir, comVideo, comVoz) {
   const s = series[post.serie];
   // Capa (primeira cena estática): use como "capa do Reel" ao publicar.
   const { html: capa } = cenaHTML(post.cenas[0], 'reel', null);
@@ -261,7 +300,8 @@ async function gerarReel(page, post, dir, comVideo) {
   await page.screenshot({ path: path.join(dir, 'capa.png') });
   if (!comVideo) return;
 
-  const { html, total } = montarReel(post);
+  const audios = comVoz && post.narracao ? narrar(post) : null;
+  const { html, total, falas } = montarReel(post, audios);
   await page.setContent(html);
   await page.evaluate(() => document.fonts.ready);
   const frames = Math.ceil(total * FPS);
@@ -277,12 +317,19 @@ async function gerarReel(page, post, dir, comVideo) {
     await page.screenshot({ path: path.join(tmp, `f${String(f).padStart(5, '0')}.jpg`), type: 'jpeg', quality: 92 });
   }
   const mp4 = path.join(dir, 'reel.mp4');
+  // cada fala entra no seu instante (adelay); depois tudo é mixado e o volume normalizado
+  const entradas = falas.flatMap((f) => ['-i', f.wav]);
+  const filtro = falas.length
+    ? falas.map((f, i) => `[${i + 1}:a]adelay=${Math.round(f.ini * 1000)}:all=1[f${i}]`).join(';') +
+      `;${falas.map((_, i) => `[f${i}]`).join('')}amix=inputs=${falas.length}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[voz]`
+    : null;
   execFileSync('ffmpeg', [
-    '-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(tmp, 'f%05d.jpg'),
-    '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4,
+    '-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(tmp, 'f%05d.jpg'), ...entradas,
+    ...(filtro ? ['-filter_complex', filtro, '-map', '0:v', '-map', '[voz]', '-c:a', 'aac', '-b:a', '192k'] : []),
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-t', total.toFixed(2), mp4,
   ]);
   fs.rmSync(tmp, { recursive: true, force: true });
-  console.log(`  ✓ reel.mp4 (${total.toFixed(1)}s, ${frames} frames)`);
+  console.log(`  ✓ reel.mp4 (${total.toFixed(1)}s, ${frames} frames${falas.length ? `, narração ${VOZ}` : ''})`);
 }
 
 // ───────────────────────────── legenda ─────────────────────────────
@@ -313,6 +360,7 @@ function escreverLegenda(post, dir) {
 (async () => {
   const args = process.argv.slice(2);
   const comVideo = !args.includes('--sem-video');
+  const comVoz = !args.includes('--sem-voz');
   const filtros = args.filter((a) => !a.startsWith('--'));
   const lista = posts.filter((p) => !filtros.length || filtros.some((f) => p.id.startsWith(f)));
 
@@ -328,7 +376,7 @@ function escreverLegenda(post, dir) {
       await gerarCarrossel(page, post, dir);
     } else {
       await page.setViewportSize({ width: 1080, height: 1920 });
-      await gerarReel(page, post, dir, comVideo);
+      await gerarReel(page, post, dir, comVideo, comVoz);
     }
   }
   await browser.close();

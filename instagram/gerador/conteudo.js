@@ -27,6 +27,15 @@ const posts = [
   {
     id: '01-variavel-pote-de-tempero',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "Sabia que você usa variáveis todo dia? E o melhor: na cozinha!",
+      "Olha só. Pensa num pote de tempero, com uma etiqueta. A etiqueta é o nome. E o que tem dentro do pote, é o valor.",
+      "No código, é igualzinho. Açúcar recebe quinhentos. Sal recebe duzentos. E tempero recebe o texto: orégano. Cada nome guarda um valor.",
+      "E quando o açúcar acaba? Você não joga o pote fora, né? Você reabastece! Açúcar passa a valer zero, e depois, mil. O pote é o mesmo. Só o conteúdo que varia. Por isso o nome: variável!",
+      "Resumindo: a etiqueta é o nome da variável. O conteúdo é o valor guardado. E reabastecer, é atribuir um novo valor.",
+      "Salva esse vídeo, e manda pra quem tá começando a programar! No próximo da série: if e élse, explicados com um guarda-chuva.",
+    ],
     serie: 'logica',
     data: 'Ter 20/10/2026 · 19h',
     cenas: [
@@ -129,6 +138,15 @@ No slide 4 tem o código em Python, pra você ver a analogia virando programa de
   {
     id: '03-dashboard-painel-do-carro',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "Você já sabe ler um déchibórdi. Só não sabia disso ainda!",
+      "Repara no painel do carro. Velocidade, combustível, temperatura. Tudo o que importa, numa olhada só.",
+      "Em bi ai, cada ponteiro desses é um cá pê i, um indicador-chave. O combustível é o orçamento disponível. O velocímetro, as vendas do dia. E a temperatura, a satisfação do cliente.",
+      "E a luz de alerta? Essa é o alerta condicional. Ela acende sozinha, quando alguma coisa sai do normal. Você nem precisa ficar vigiando.",
+      "Então guarda essa regra: déchibórdi bom é igual painel de carro. Mostra pouco, só o essencial. Dá pra entender em cinco segundos. E avisa antes do problema acontecer.",
+      "Comenta: painel, aqui embaixo! No próximo da série, eu te explico é tê éle, com uma ida à feira.",
+    ],
     serie: 'bi',
     data: 'Sáb 24/10/2026 · 11h',
     cenas: [
@@ -172,6 +190,15 @@ Se o seu dashboard no Power BI precisa de 10 minutos de explicação, ele é um 
   {
     id: '04-if-else-guarda-chuva',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "Você toma decisões igualzinho a um programa. E faz isso toda manhã!",
+      "Antes de sair de casa, você pensa: se estiver chovendo, eu levo o guarda-chuva. Senão, vou de óculos escuros.",
+      "No código, o se vira if. E o senão vira élse. Se estiver chovendo: levar guarda-chuva. Senão: levar óculos escuros.",
+      "E dá pra encadear decisões com o élif, que quer dizer: senão, se. Se chover, guarda-chuva. Senão, se estiver frio, casaco. Senão, é só sair feliz!",
+      "Agora, presta atenção na regra de ouro: o computador testa as condições de cima pra baixo, e para na primeira que for verdadeira. Por isso, a ordem importa!",
+      "Desafio: escreve aqui nos comentários um if da sua rotina. E salva o vídeo, pra não esquecer!",
+    ],
     serie: 'logica',
     data: 'Ter 27/10/2026 · 19h',
     cenas: [
@@ -248,6 +275,16 @@ Feliz Halloween, dev! 🎃`,
   {
     id: '06-pilares-poo-cafeteira',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "Os quatro pilares da programação orientada a objetos, explicados com uma cafeteira. Bora?",
+      "Primeiro: encapsulamento. As peças de dentro da cafeteira ficam trancadas. Você não mexe na resistência. Só usa o que a máquina libera pra você. No código, esses dados ficam privados.",
+      "Segundo: abstração. Você só vê três botões: curto, longo e capuchino. Toda a complexidade fica escondida. Você só manda: fazer café.",
+      "Terceiro: herança. A cafeteira de cápsula herda tudo da cafeteira comum. E ainda ganha uma função nova: ler a cápsula.",
+      "Quarto: polimorfismo. O mesmo comando, preparar, gera resultados diferentes: café, chá, ou chocolate quente. Mesma ordem, várias formas.",
+      "Resumo pra prova: encapsulamento protege o que é interno. Abstração mostra só o essencial. Herança reaproveita e estende. E polimorfismo é o mesmo comando, com várias formas.",
+      "Essa pergunta cai muito em entrevista de emprego. Salva o vídeo, e manda pro amigo que vai fazer uma!",
+    ],
     serie: 'poo',
     data: 'Ter 03/11/2026 · 19h',
     cenas: [
@@ -407,6 +444,16 @@ Em lógica de programação isso é uma estrutura de repetição:
   {
     id: '09-funcao-liquidificador',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "Função em programação é um liquidificador. Sério, olha só!",
+      "Primeiro, entram os ingredientes: morango e leite. Na programação, isso se chama parâmetros. É a entrada.",
+      "Aí, ele processa. E você nem precisa saber como o motor funciona por dentro. É só apertar o botão.",
+      "E no final, sai a vitamina! Isso é o retorno da função. A saída.",
+      "Em Páiton, fica assim: a gente define a função liquidificador, que recebe uma fruta e um líquido, e retorna a vitamina. Depois, é só chamar: liquidificador, de morango com leite.",
+      "E por que usar funções? Porque você escreve uma vez, e usa mil vezes. O código fica organizado. E achar erro fica muito mais fácil.",
+      "E aí, que vitamina a sua função faria? Comenta aqui! E segue o perfil, pra aprender programação sem decoreba.",
+    ],
     serie: 'logica',
     data: 'Qui 12/11/2026 · 19h',
     cenas: [
@@ -494,6 +541,15 @@ Esse tipo de exercício é chamado de teste de mesa: você executa o código "na
   {
     id: '11-black-friday-desconto-real',
     tipo: 'reel',
+    // Narração: uma fala por cena. Termos em inglês vão escritos como se pronunciam.
+    narracao: [
+      "De mil novecentos e noventa e nove, por novecentos e noventa e nove reais. Mas será que esse desconto é de verdade?",
+      "Quem trabalha com bi ai responde isso olhando o histórico. É a tal da série temporal: como o preço andou nos últimos meses.",
+      "Olha esse gráfico. O preço ficava em torno de mil e duzentos reais. Aí, em novembro, ele sobe pra quase dois mil. Só pra cair na Bléqui Fráidei, e parecer uma pechincha.",
+      "A métrica certa é comparar com a média dos últimos meses, e não com o preço de antes. Fazendo a conta, o desconto real é de só dezessete por cento. Não cinquenta!",
+      "Isso é bi ai na vida real. Dado histórico vale mais que promessa. Compare com a referência certa. E decida com fatos, não com emoção.",
+      "Manda esse vídeo pro amigo que sempre cai no metade do dobro. E salva, pra usar na sexta, dia vinte e sete!",
+    ],
     serie: 'blackfriday',
     data: 'Ter 24/11/2026 · 19h (semana da Black Friday, 27/11)',
     cenas: [

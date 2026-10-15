@@ -1,6 +1,6 @@
 # 📲 Pacote de conteúdo para Instagram: Lógica, POO e BI do dia a dia
 
-Calendário de **20/10 a 24/11/2026** com **11 posts prontos**: 6 Reels (MP4) e 5 carrosséis (PNG). Cada post tem legenda, 5 hashtags e texto alternativo.
+Calendário de **20/10 a 24/11/2026** com **11 posts prontos**: 6 Reels **narrados em português** (MP4) e 5 carrosséis (PNG). Cada post tem legenda, 5 hashtags e texto alternativo.
 Tudo é gerado por código a partir de [`gerador/conteudo.js`](gerador/conteudo.js), então dá para editar um texto e regerar.
 
 ```
@@ -38,7 +38,7 @@ Em uns 30 minutos dá para deixar os 11 posts agendados pelo computador, sem pas
 5. Em **Opções de agendamento**, escolha a data e a hora do calendário abaixo e clique em **Agendar**.
 6. Repita para os 11 posts.
 
-**Faça no celular, na hora em que o post for ao ar:** colocar o **áudio em alta** nos Reels. A biblioteca de músicas do Business Suite é menor que a do app. Se quiser o áudio em alta, publique os Reels pelo app, ou edite o Reel logo depois que ele for publicado.
+**Música de fundo (opcional):** os Reels já vêm com narração. Para colocar uma música em alta por baixo, use o app, porque a biblioteca de músicas do Business Suite é menor. Deixe a música em ~10% e o áudio original em 100%.
 
 ## 🗓️ Calendário
 
@@ -93,7 +93,7 @@ Hoje a busca do Instagram lê **o texto da legenda, o texto na tela e o seu perf
 
 **Reels**
 1. Envie o `reel.mp4`. Em *Editar capa → Adicionar da galeria*, use o `capa.png`.
-2. **Adicione um áudio em alta no próprio app** (ícone de música; os em alta têm a setinha ↗). O vídeo vem sem som de propósito, porque o áudio em alta muda toda semana e só dá pra usar a música licenciada direto no Instagram. Deixe o volume baixo: quem lê é o texto.
+2. **O vídeo já tem narração.** Se quiser uma música em alta por baixo (ícone de música; as em alta têm a setinha ↗), deixe a **música em ~10%** e o **áudio original em 100%**, para não abafar a explicação.
 3. Cole a legenda e as hashtags do `legenda.txt`.
 4. Em *Configurações avançadas → Acessibilidade*, cole o **texto alternativo**.
 5. Opcional: ative **"Teste de Reels"** (*Trial Reels*) para mostrar primeiro só a quem não te segue. É bom para testar ganchos.
@@ -123,22 +123,37 @@ Hoje a busca do Instagram lê **o texto da legenda, o texto na tela e o seu perf
 
 ## 🛠️ Como gerar ou editar os vídeos e imagens
 
-Pré-requisitos: [Node.js 18+](https://nodejs.org) e [ffmpeg](https://ffmpeg.org/download.html) no PATH.
+Pré-requisitos: [Node.js 18+](https://nodejs.org), [ffmpeg](https://ffmpeg.org/download.html) no PATH e, para a narração, [Python 3.10+](https://www.python.org/downloads/).
 
 ```bash
 cd instagram/gerador
 npm install
 npx playwright install chromium
-node gerar.js                 # gera tudo (~1 min por Reel)
+pip install -r requirements.txt
+```
+
+**Narração:** usa o [Kokoro](https://github.com/thewh1teagle/kokoro-onnx), uma voz neural gratuita que roda no seu computador, sem internet e sem chave de API. Baixe os 2 arquivos do modelo (cerca de 340 MB) e coloque-os em `instagram/gerador/modelos/`:
+- [kokoro-v1.0.onnx](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx)
+- [voices-v1.0.bin](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin)
+
+```bash
+node gerar.js                 # gera tudo (~1–2 min por Reel)
 node gerar.js 03 07           # só os posts 03 e 07
 node gerar.js --sem-video     # só carrosséis, capas e legendas (rápido)
+node gerar.js --sem-voz       # Reels sem narração
 ```
+
+**Trocar a voz:** há 3 vozes brasileiras: `pm_alex` (masculina, padrão), `pm_santa` (masculina) e `pf_dora` (feminina). A velocidade padrão é `1.08`.
+- PowerShell: `$env:VOZ="pf_dora"; $env:VELOCIDADE="1.0"; node gerar.js 01`
+- Linux/Mac: `VOZ=pf_dora VELOCIDADE=1.0 node gerar.js 01`
+
+**Editar o que o narrador fala:** em `conteudo.js`, cada Reel tem a lista `narracao`, com uma fala por cena e na mesma ordem das cenas. Escreva termos em inglês do jeito que se pronunciam (`déchibórdi`, `Páiton`, `bi ai`, `élse`), senão a voz lê como português. Cada cena dura o tempo da fala, e os elementos vão aparecendo enquanto o narrador explica.
 
 O **@insta.rsystem** já sai nas artes: no rodapé dos carrosséis e no topo dos Reels, porque embaixo o app cobre com a legenda e os botões. Para trocar ou remover:
 - PowerShell: `$env:PERFIL="@outroperfil"; node gerar.js` (ou `$env:PERFIL=""` para tirar)
 - Linux/Mac: `PERFIL=@outroperfil node gerar.js`
 
-**Para criar um post novo**, copie um bloco em `conteudo.js`, troque o `id` e os textos e rode o gerador. Use `**palavra**` para destacar na cor da série. Cada cena aceita `emoji`, `title`, `text`, `code`, `rows` (tabela), `bullets` e `chart` (gráfico de barras animado). A duração de cada cena no Reel é calculada pelo tamanho do texto.
+**Para criar um post novo**, copie um bloco em `conteudo.js`, troque o `id` e os textos e rode o gerador. Use `**palavra**` para destacar na cor da série. Cada cena aceita `emoji`, `title`, `text`, `code`, `rows` (tabela), `bullets` e `chart` (gráfico de barras animado). Sem narração, a duração de cada cena é calculada pelo tamanho do texto.
 
 ---
 
